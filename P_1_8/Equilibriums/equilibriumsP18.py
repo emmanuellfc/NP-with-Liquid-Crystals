@@ -1,8 +1,7 @@
 from hoomd import *
 from hoomd import md
 
-try:
-    for i in range(0,11):
+for i in range(0,11):
         temp = 6 + 0.2 * i
         press = 1.8
         init_file = "T_CM&NP_" + str(temp) + "_P_" + str(press) + "_ramp.gsd"
@@ -38,7 +37,7 @@ try:
         mesogens = group.rigid_center()
         groupNP_mes = group.union(name='NP_Mes', a = nanoparticles, b = mesogens)
     
-        npt = md.integrate.npt(group = groupNP_mes, kT = temp, tau = 10.0, tauP = 10.0, P = press)
+        npt = md.integrate.npt(group = groupNP_mes, kT = temp, tau = 5.0, tauP = 5.0, P = press)
 
         gsd_restart = dump.gsd(filename = restart_file, group = groupNP_mes, truncate = True, period = 1e4, phase = 0)
 
@@ -53,7 +52,6 @@ try:
                overwrite = True)
         
         run(1e5)
-except WalltimeLimitReached:
-    pass
+        gsd_restart.write_restart()
 
-gsd_restart.write_restart()
+
