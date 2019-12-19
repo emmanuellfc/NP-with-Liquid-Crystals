@@ -1,5 +1,7 @@
 from hoomd import *
 from hoomd import md
+import os
+import shutil
 
 for i in range(0,11):
         temp = 6 + 0.2 * i
@@ -8,6 +10,7 @@ for i in range(0,11):
         restart_file = "T_CM&NP_" + str(temp) + "_P_" + str(press) + "_restart.gsd"
         log_file = "T_" + str(temp) + "_P_" + str(press) + "_equilibrium.log"
         gsd_file = "T_" + str(temp) + "_P_" + str(press) + "_equilibrium.gsd"
+        directory_file = "T_" + str(temp) + "_P_" + str(press) + "_equilibrium"
 
 
         context.initialize("")
@@ -37,7 +40,7 @@ for i in range(0,11):
         mesogens = group.rigid_center()
         groupNP_mes = group.union(name='NP_Mes', a = nanoparticles, b = mesogens)
     
-        npt = md.integrate.npt(group = groupNP_mes, kT = temp, tau = 5.0, tauP = 5.0, P = press)
+        npt = md.integrate.npt(group = groupNP_mes, kT = 3.3,tau = 10.0, P = temp, tauP = 10.0)
 
         gsd_restart = dump.gsd(filename = restart_file, group = groupNP_mes, truncate = True, period = 1e4, phase = 0)
 
@@ -51,7 +54,10 @@ for i in range(0,11):
                group = group.all(),
                overwrite = True)
         
-        run(1e5)
-        gsd_restart.write_restart()
-
-
+        run(1e4)
+        if not os.path.exists(directory_file):
+            os.makedirs(directory_file) 
+        else:
+            pass
+        shutil.move(os.path.join(log_file), os.path.join(directory_file, log_file))
+        shutil.move(os.path.join(gsd_file), os.path.join(directory_file, gsd_file))
