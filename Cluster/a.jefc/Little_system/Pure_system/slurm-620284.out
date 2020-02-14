@@ -1,0 +1,155 @@
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0mHOOMD-blue 2.3.5 CUDA (8.0) DOUBLE HPMC_MIXED TBB SSE SSE2 
+Compiled: 10/08/18
+Copyright 2009-2018 The Regents of the University of Michigan.
+-----
+You are using HOOMD-blue. Please cite the following:
+* J A Anderson, C D Lorenz, and A Travesset. "General purpose molecular dynamics
+  simulations fully implemented on graphics processing units", Journal of
+  Computational Physics 227 (2008) 5342--5359
+* J Glaser, T D Nguyen, J A Anderson, P Liu, F Spiga, J A Millan, D C Morse, and
+  S C Glotzer. "Strong scaling of general-purpose molecular dynamics simulations
+  on GPUs", Computer Physics Communications 192 (2015) 97--107
+-----
+notice(2): This system is not compute exclusive, using local rank to select GPUs
+HOOMD-blue is running on the following GPU(s):
+ [0]            Tesla K20m  13 SM_3.5 @ 0.706 GHz, 4743 MiB DRAM
+Equilibrium_T_6_3.py:027  |  system = hoomd.init.read_gsd("T_CM_6.4_P_1.4_ramp.gsd",frame = -1)
+notice(2): Group "all" created containing 1000 particles
+Equilibrium_T_6_3.py:031  |  rigid = hoomd.md.constrain.rigid();
+notice(2): constrain.rigid(): Creating 1000 rigid bodies (adding 8000 particles)
+Equilibrium_T_6_3.py:043  |  nl = hoomd.md.nlist.tree();
+-----
+You are using tree neighbor lists. Please cite the following:
+* M P Howard, J A Anderson, A Nikoubashman, S C Glotzer, and A Z
+  Panagiotopoulos. "Efficient neighbor list calculation for molecular simulation
+  of colloidal systems using graphics processing units", Computer Physics
+  Communications 203 (2016) 45--52
+-----
+Equilibrium_T_6_3.py:045  |  lj = hoomd.md.pair.lj(r_cut = 3.5, nlist = nl)
+Equilibrium_T_6_3.py:046  |  lj.set_params(mode = 'shift')
+Equilibrium_T_6_3.py:050  |  lj.pair_coeff.set('M','M', epsilon = 1.0, sigma = 1.0)
+Equilibrium_T_6_3.py:051  |  lj.pair_coeff.set('A','A', epsilon = 1.0, sigma = 1.0)
+Equilibrium_T_6_3.py:052  |  lj.pair_coeff.set('M','A', epsilon = 1.0, sigma = 1.0)
+Equilibrium_T_6_3.py:056  |  hoomd.md.integrate.mode_standard(dt = 0.005);
+Equilibrium_T_6_3.py:060  |  mesogens = hoomd.group.rigid_center();
+notice(2): Group "rigid_center" created containing 1000 particles
+Equilibrium_T_6_3.py:068  |  npt = hoomd.md.integrate.npt(group = mesogens, kT = t_max, tau = 12.5, tauP = 12.5, P = p_max);
+Equilibrium_T_6_3.py:077  |  log = hoomd.analyze.log(filename = log_file,
+                         quantities = ['num_particles',
+                                     'ndof',
+                                     'translational_ndof',
+                                     'rotational_ndof',
+                                     'potential_energy',
+                                     'kinetic_energy',
+                                     'translational_kinetic_energy',
+                                     'rotational_kinetic_energy',
+                                     'temperature',
+                                     'pressure',
+                                      'volume'],
+                         period = 1e3,
+                         overwrite = True);
+Equilibrium_T_6_3.py:093  |                 group = hoomd.group.all(),
+Equilibrium_T_6_3.py:091  |  gsd = hoomd.dump.gsd(gsd_file,
+               period = 1e3,
+               group = hoomd.group.all(),
+               overwrite = True); 
+Equilibrium_T_6_3.py:095  |  meso_gsd = hoomd.dump.gsd(meso_gsd_file,
+               period = 1e3,
+               group = mesogens,
+               overwrite = True); 
+Equilibrium_T_6_3.py:104  |  hoomd.run(steps)
+notice(2): -- Neighborlist exclusion statistics -- :
+notice(2): Particles with 0 exclusions             : 9000
+notice(2): Neighbors included by diameter          : no
+notice(2): Neighbors excluded when in the same body: yes
+** starting run **
+Time 00:00:10 | Step 1599308 / 1797000 | TPS 230.767 | ETA 00:14:16
+Time 00:00:20 | Step 1601938 / 1797000 | TPS 262.943 | ETA 00:12:21
+Time 00:00:30 | Step 1604490 / 1797000 | TPS 254.989 | ETA 00:12:34
+Time 00:00:40 | Step 1607064 / 1797000 | TPS 257.384 | ETA 00:12:17
+Time 00:00:50 | Step 1609686 / 1797000 | TPS 262.129 | ETA 00:11:54
+Time 00:01:00 | Step 1612316 / 1797000 | TPS 262.803 | ETA 00:11:42
+Time 00:01:10 | Step 1614854 / 1797000 | TPS 253.629 | ETA 00:11:58
+Time 00:01:20 | Step 1617428 / 1797000 | TPS 257.303 | ETA 00:11:37
+Time 00:01:30 | Step 1620041 / 1797000 | TPS 261.238 | ETA 00:11:17
+Time 00:01:40 | Step 1622594 / 1797000 | TPS 255.113 | ETA 00:11:23
+Time 00:01:50 | Step 1625086 / 1797000 | TPS 249.066 | ETA 00:11:30
+Time 00:02:00 | Step 1627617 / 1797000 | TPS 253.039 | ETA 00:11:09
+Time 00:02:10 | Step 1630161 / 1797000 | TPS 254.26 | ETA 00:10:56
+Time 00:02:20 | Step 1632755 / 1797000 | TPS 259.385 | ETA 00:10:33
+Time 00:02:30 | Step 1635366 / 1797000 | TPS 261.022 | ETA 00:10:19
+Time 00:02:40 | Step 1637954 / 1797000 | TPS 258.705 | ETA 00:10:14
+Time 00:02:50 | Step 1640488 / 1797000 | TPS 253.225 | ETA 00:10:18
+Time 00:03:00 | Step 1643086 / 1797000 | TPS 259.606 | ETA 00:09:52
+Time 00:03:10 | Step 1645731 / 1797000 | TPS 264.484 | ETA 00:09:31
+Time 00:03:20 | Step 1648278 / 1797000 | TPS 254.514 | ETA 00:09:44
+Time 00:03:30 | Step 1650794 / 1797000 | TPS 251.466 | ETA 00:09:41
+Time 00:03:40 | Step 1653356 / 1797000 | TPS 255.997 | ETA 00:09:21
+Time 00:03:50 | Step 1655964 / 1797000 | TPS 260.684 | ETA 00:09:01
+Time 00:04:00 | Step 1658600 / 1797000 | TPS 263.573 | ETA 00:08:45
+Time 00:04:10 | Step 1661197 / 1797000 | TPS 259.649 | ETA 00:08:43
+Time 00:04:20 | Step 1663784 / 1797000 | TPS 258.618 | ETA 00:08:35
+Time 00:04:30 | Step 1666380 / 1797000 | TPS 259.409 | ETA 00:08:23
+Time 00:04:40 | Step 1668931 / 1797000 | TPS 254.88 | ETA 00:08:22
+Time 00:04:50 | Step 1671541 / 1797000 | TPS 260.879 | ETA 00:08:00
+Time 00:05:00 | Step 1674050 / 1797000 | TPS 250.844 | ETA 00:08:10
+Time 00:05:10 | Step 1676606 / 1797000 | TPS 255.448 | ETA 00:07:51
+Time 00:05:20 | Step 1679169 / 1797000 | TPS 256.234 | ETA 00:07:39
+Time 00:05:30 | Step 1681761 / 1797000 | TPS 259.093 | ETA 00:07:24
+Time 00:05:40 | Step 1684371 / 1797000 | TPS 260.999 | ETA 00:07:11
+Time 00:05:50 | Step 1687027 / 1797000 | TPS 265.413 | ETA 00:06:54
+Time 00:06:00 | Step 1689652 / 1797000 | TPS 262.317 | ETA 00:06:49
+Time 00:06:10 | Step 1692268 / 1797000 | TPS 261.568 | ETA 00:06:40
+Time 00:06:20 | Step 1694858 / 1797000 | TPS 258.966 | ETA 00:06:34
+Time 00:06:30 | Step 1697440 / 1797000 | TPS 258.052 | ETA 00:06:25
+Time 00:06:40 | Step 1700091 / 1797000 | TPS 264.923 | ETA 00:06:05
+Time 00:06:50 | Step 1702734 / 1797000 | TPS 264.162 | ETA 00:05:56
+Time 00:07:00 | Step 1705359 / 1797000 | TPS 262.325 | ETA 00:05:49
+Time 00:07:10 | Step 1707903 / 1797000 | TPS 254.272 | ETA 00:05:50
+Time 00:07:20 | Step 1710526 / 1797000 | TPS 262.257 | ETA 00:05:29
+Time 00:07:30 | Step 1713095 / 1797000 | TPS 256.758 | ETA 00:05:26
+Time 00:07:40 | Step 1715713 / 1797000 | TPS 261.661 | ETA 00:05:10
+Time 00:07:50 | Step 1718289 / 1797000 | TPS 257.4 | ETA 00:05:05
+Time 00:08:00 | Step 1720852 / 1797000 | TPS 256.277 | ETA 00:04:57
+Time 00:08:10 | Step 1723448 / 1797000 | TPS 259.597 | ETA 00:04:43
+Time 00:08:20 | Step 1725997 / 1797000 | TPS 254.77 | ETA 00:04:38
+Time 00:08:30 | Step 1728529 / 1797000 | TPS 252.992 | ETA 00:04:30
+Time 00:08:40 | Step 1731024 / 1797000 | TPS 249.312 | ETA 00:04:24
+Time 00:08:50 | Step 1733581 / 1797000 | TPS 255.686 | ETA 00:04:08
+Time 00:09:00 | Step 1736189 / 1797000 | TPS 260.646 | ETA 00:03:53
+Time 00:09:10 | Step 1738782 / 1797000 | TPS 259.081 | ETA 00:03:44
+Time 00:09:20 | Step 1741363 / 1797000 | TPS 257.942 | ETA 00:03:35
+Time 00:09:30 | Step 1743971 / 1797000 | TPS 260.661 | ETA 00:03:23
+Time 00:09:40 | Step 1746518 / 1797000 | TPS 254.696 | ETA 00:03:18
+Time 00:09:50 | Step 1749104 / 1797000 | TPS 258.566 | ETA 00:03:05
+Time 00:10:00 | Step 1751706 / 1797000 | TPS 260.158 | ETA 00:02:54
+Time 00:10:10 | Step 1754312 / 1797000 | TPS 260.588 | ETA 00:02:43
+Time 00:10:20 | Step 1756924 / 1797000 | TPS 261.036 | ETA 00:02:33
+Time 00:10:30 | Step 1759433 / 1797000 | TPS 250.744 | ETA 00:02:29
+Time 00:10:40 | Step 1761937 / 1797000 | TPS 250.252 | ETA 00:02:20
+Time 00:10:50 | Step 1764455 / 1797000 | TPS 251.676 | ETA 00:02:09
+Time 00:11:00 | Step 1767001 / 1797000 | TPS 254.57 | ETA 00:01:57
+Time 00:11:10 | Step 1769544 / 1797000 | TPS 254.159 | ETA 00:01:48
+Time 00:11:20 | Step 1772087 / 1797000 | TPS 254.295 | ETA 00:01:37
+Time 00:11:30 | Step 1774659 / 1797000 | TPS 257.192 | ETA 00:01:26
+Time 00:11:40 | Step 1777159 / 1797000 | TPS 249.853 | ETA 00:01:19
+Time 00:11:50 | Step 1779757 / 1797000 | TPS 259.726 | ETA 00:01:06
+Time 00:12:00 | Step 1782372 / 1797000 | TPS 261.444 | ETA 00:00:55
+Time 00:12:10 | Step 1784968 / 1797000 | TPS 259.521 | ETA 00:00:46
+Time 00:12:20 | Step 1787543 / 1797000 | TPS 257.399 | ETA 00:00:36
+Time 00:12:30 | Step 1790072 / 1797000 | TPS 252.778 | ETA 00:00:27
+Time 00:12:40 | Step 1792685 / 1797000 | TPS 261.147 | ETA 00:00:16
+Time 00:12:50 | Step 1795354 / 1797000 | TPS 266.778 | ETA 00:00:06
+Time 00:12:56 | Step 1797000 / 1797000 | TPS 261.266 | ETA 00:00:00
+Average TPS: 257.524
+---------
+-- Neighborlist stats:
+83205 normal updates / 667 forced updates / 0 dangerous updates
+n_neigh_min: 98 / n_neigh_max: 168 / n_neigh_avg: 130.33
+shortest rebuild period: 1
+** run complete **

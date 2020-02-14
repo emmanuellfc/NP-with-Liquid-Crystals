@@ -1,0 +1,165 @@
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0mHOOMD-blue 2.3.5 CUDA (8.0) DOUBLE HPMC_MIXED TBB SSE SSE2 
+Compiled: 10/08/18
+Copyright 2009-2018 The Regents of the University of Michigan.
+-----
+You are using HOOMD-blue. Please cite the following:
+* J A Anderson, C D Lorenz, and A Travesset. "General purpose molecular dynamics
+  simulations fully implemented on graphics processing units", Journal of
+  Computational Physics 227 (2008) 5342--5359
+* J Glaser, T D Nguyen, J A Anderson, P Liu, F Spiga, J A Millan, D C Morse, and
+  S C Glotzer. "Strong scaling of general-purpose molecular dynamics simulations
+  on GPUs", Computer Physics Communications 192 (2015) 97--107
+-----
+notice(2): This system is not compute exclusive, using local rank to select GPUs
+HOOMD-blue is running on the following GPU(s):
+ [0]            Tesla K20m  13 SM_3.5 @ 0.706 GHz, 4743 MiB DRAM
+Ramp05.py:049  |  system = hoomd.init.read_snapshot(snap)
+notice(2): Group "all" created containing 1000 particles
+Ramp05.py:104  |  rigid = hoomd.md.constrain.rigid();
+notice(2): constrain.rigid(): Creating 1000 rigid bodies (adding 8000 particles)
+Ramp05.py:116  |  nl = hoomd.md.nlist.tree();
+-----
+You are using tree neighbor lists. Please cite the following:
+* M P Howard, J A Anderson, A Nikoubashman, S C Glotzer, and A Z
+  Panagiotopoulos. "Efficient neighbor list calculation for molecular simulation
+  of colloidal systems using graphics processing units", Computer Physics
+  Communications 203 (2016) 45--52
+-----
+Ramp05.py:118  |  lj = hoomd.md.pair.lj(r_cut = 3.5, nlist = nl)
+Ramp05.py:119  |  lj.set_params(mode = 'shift')
+Ramp05.py:123  |  lj.pair_coeff.set('NP','NP', epsilon = 1.0, sigma = 5.0)
+Ramp05.py:124  |  lj.pair_coeff.set('M' , 'M', epsilon = 1.0, sigma = 1.0)
+Ramp05.py:125  |  lj.pair_coeff.set('A' , 'A', epsilon = 1.0, sigma = 1.0)
+Ramp05.py:126  |  lj.pair_coeff.set('M' , 'A', epsilon = 1.0, sigma = 1.0)
+Ramp05.py:127  |  lj.pair_coeff.set('NP', 'M', epsilon = 1.0, sigma = 3.0)
+Ramp05.py:128  |  lj.pair_coeff.set('NP', 'A', epsilon = 1.0, sigma = 3.0)
+Ramp05.py:132  |  hoomd.md.integrate.mode_standard(dt = 0.005);
+Ramp05.py:136  |  nanoparticles = hoomd.group.type(name ='Nano_Particles', type = 'NP')
+notice(2): Group "Nano_Particles" created containing 4 particles
+Ramp05.py:137  |  mesogens = hoomd.group.rigid_center();
+notice(2): Group "rigid_center" created containing 1000 particles
+notice(2): Group "NP_Mes" created containing 1004 particles
+Ramp05.py:142  |  npt = hoomd.md.integrate.npt(group = groupNP_mes, kT = t_max, tau = 1.0, tauP = 1.0, P = pressure);
+Ramp05.py:151  |  log = hoomd.analyze.log(filename = log_file,
+                         quantities = ['num_particles',
+                                     'ndof',
+                                     'translational_ndof',
+                                     'rotational_ndof',
+                                     'potential_energy',
+                                     'kinetic_energy',
+                                     'translational_kinetic_energy',
+                                     'rotational_kinetic_energy',
+                                     'temperature',
+                                     'pressure',
+                                      'volume'],
+                         period = 1e3,
+                         overwrite = True);
+Ramp05.py:167  |                 group = hoomd.group.all(),
+Ramp05.py:165  |  gsd = hoomd.dump.gsd(gsd_file,
+               period = 1e3,
+               group = hoomd.group.all(),
+               overwrite = True); 
+Ramp05.py:169  |  meso_gsd = hoomd.dump.gsd(meso_gsd_file,
+               period = 1e3,
+               group = groupNP_mes,
+               overwrite = True); 
+Ramp05.py:180  |  hoomd.run(run_time)
+notice(2): -- Neighborlist exclusion statistics -- :
+notice(2): Particles with 0 exclusions             : 9004
+notice(2): Neighbors included by diameter          : no
+notice(2): Neighbors excluded when in the same body: yes
+** starting run **
+Time 00:00:10 | Step 5925 / 100000 | TPS 592.466 | ETA 00:02:38
+Time 00:00:20 | Step 11050 / 100000 | TPS 512.468 | ETA 00:02:53
+Time 00:00:30 | Step 15589 / 100000 | TPS 453.704 | ETA 00:03:06
+Time 00:00:40 | Step 19797 / 100000 | TPS 420.614 | ETA 00:03:10
+Time 00:00:50 | Step 23686 / 100000 | TPS 388.897 | ETA 00:03:16
+Time 00:01:00 | Step 27459 / 100000 | TPS 377.266 | ETA 00:03:12
+Time 00:01:10 | Step 31151 / 100000 | TPS 369.197 | ETA 00:03:06
+Time 00:01:20 | Step 34780 / 100000 | TPS 362.895 | ETA 00:02:59
+Time 00:01:30 | Step 38309 / 100000 | TPS 352.897 | ETA 00:02:54
+Time 00:01:40 | Step 41735 / 100000 | TPS 342.567 | ETA 00:02:50
+Time 00:01:50 | Step 45143 / 100000 | TPS 340.58 | ETA 00:02:41
+Time 00:02:00 | Step 48482 / 100000 | TPS 333.815 | ETA 00:02:34
+Time 00:02:10 | Step 51730 / 100000 | TPS 324.671 | ETA 00:02:28
+Time 00:02:20 | Step 55049 / 100000 | TPS 331.89 | ETA 00:02:15
+Time 00:02:30 | Step 58339 / 100000 | TPS 328.866 | ETA 00:02:06
+Time 00:02:40 | Step 61706 / 100000 | TPS 336.652 | ETA 00:01:53
+Time 00:02:50 | Step 65009 / 100000 | TPS 330.284 | ETA 00:01:45
+Time 00:03:00 | Step 68391 / 100000 | TPS 338.153 | ETA 00:01:33
+Time 00:03:10 | Step 71709 / 100000 | TPS 331.79 | ETA 00:01:25
+Time 00:03:20 | Step 75093 / 100000 | TPS 338.27 | ETA 00:01:13
+Time 00:03:30 | Step 78428 / 100000 | TPS 333.499 | ETA 00:01:04
+Time 00:03:40 | Step 81753 / 100000 | TPS 332.354 | ETA 00:00:54
+Time 00:03:50 | Step 85132 / 100000 | TPS 337.786 | ETA 00:00:44
+Time 00:04:00 | Step 88463 / 100000 | TPS 333.028 | ETA 00:00:34
+Time 00:04:10 | Step 91775 / 100000 | TPS 331.079 | ETA 00:00:24
+Time 00:04:20 | Step 95099 / 100000 | TPS 332.394 | ETA 00:00:14
+Time 00:04:30 | Step 98456 / 100000 | TPS 335.686 | ETA 00:00:04
+Time 00:04:34 | Step 100000 / 100000 | TPS 336.182 | ETA 00:00:00
+Average TPS: 364.108
+---------
+-- Neighborlist stats:
+39979 normal updates / 334 forced updates / 0 dangerous updates
+n_neigh_min: 32 / n_neigh_max: 102 / n_neigh_avg: 70.1575
+shortest rebuild period: 1
+** run complete **
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0mTraceback (most recent call last):
+  File "Ramp08.py", line 45, in <module>
+    hoomd.context.initialize("--mode=cpu", memory_traceback = True);
+TypeError: initialize() got an unexpected keyword argument 'memory_traceback'
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0mTraceback (most recent call last):
+  File "Ramp10.py", line 45, in <module>
+    hoomd.context.initialize("--mode=cpu", memory_traceback = True);
+TypeError: initialize() got an unexpected keyword argument 'memory_traceback'
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0mTraceback (most recent call last):
+  File "Ramp12.py", line 45, in <module>
+    hoomd.context.initialize("--mode=cpu", memory_traceback = True);
+TypeError: initialize() got an unexpected keyword argument 'memory_traceback'
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0mTraceback (most recent call last):
+  File "Ramp14.py", line 45, in <module>
+    hoomd.context.initialize("--mode=cpu", memory_traceback = True);
+TypeError: initialize() got an unexpected keyword argument 'memory_traceback'
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0mTraceback (most recent call last):
+  File "Ramp16.py", line 45, in <module>
+    hoomd.context.initialize("--mode=cpu", memory_traceback = True);
+TypeError: initialize() got an unexpected keyword argument 'memory_traceback'
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0mTraceback (most recent call last):
+  File "Ramp18.py", line 45, in <module>
+    hoomd.context.initialize("--mode=cpu", memory_traceback = True);
+TypeError: initialize() got an unexpected keyword argument 'memory_traceback'

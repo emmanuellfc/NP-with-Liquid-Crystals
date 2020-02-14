@@ -1,0 +1,353 @@
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0mHOOMD-blue 2.3.5 CUDA (8.0) DOUBLE HPMC_MIXED TBB SSE SSE2 
+Compiled: 10/08/18
+Copyright 2009-2018 The Regents of the University of Michigan.
+-----
+You are using HOOMD-blue. Please cite the following:
+* J A Anderson, C D Lorenz, and A Travesset. "General purpose molecular dynamics
+  simulations fully implemented on graphics processing units", Journal of
+  Computational Physics 227 (2008) 5342--5359
+* J Glaser, T D Nguyen, J A Anderson, P Liu, F Spiga, J A Millan, D C Morse, and
+  S C Glotzer. "Strong scaling of general-purpose molecular dynamics simulations
+  on GPUs", Computer Physics Communications 192 (2015) 97--107
+-----
+notice(2): This system is not compute exclusive, using local rank to select GPUs
+HOOMD-blue is running on the following GPU(s):
+ [0]            Tesla K20m  13 SM_3.5 @ 0.706 GHz, 4743 MiB DRAM
+Ramp14.py:049  |  system = hoomd.init.read_gsd(ramp_file,frame = -1)
+notice(2): Group "all" created containing 1004 particles
+Ramp14.py:053  |  rigid = hoomd.md.constrain.rigid();
+notice(2): constrain.rigid(): Creating 1000 rigid bodies (adding 8000 particles)
+Ramp14.py:065  |  nl = hoomd.md.nlist.tree()
+-----
+You are using tree neighbor lists. Please cite the following:
+* M P Howard, J A Anderson, A Nikoubashman, S C Glotzer, and A Z
+  Panagiotopoulos. "Efficient neighbor list calculation for molecular simulation
+  of colloidal systems using graphics processing units", Computer Physics
+  Communications 203 (2016) 45--52
+-----
+Ramp14.py:067  |  lj = hoomd.md.pair.lj(r_cut = 3.5, nlist=nl)
+Ramp14.py:068  |  lj.set_params(mode='shift')
+Ramp14.py:072  |  lj.pair_coeff.set('NP','NP', epsilon = 1.0, sigma = 5.0);
+Ramp14.py:073  |  lj.pair_coeff.set('M' ,'M' , epsilon = 1.0, sigma = 1.0);
+Ramp14.py:074  |  lj.pair_coeff.set('A' ,'A' , epsilon = 1.0, sigma = 1.0);
+Ramp14.py:075  |  lj.pair_coeff.set('M' ,'A' , epsilon = 1.0, sigma = 1.0);
+Ramp14.py:076  |  lj.pair_coeff.set('NP','M' , epsilon = 1.0, sigma = 3.0);
+Ramp14.py:077  |  lj.pair_coeff.set('NP','A' , epsilon = 1.0, sigma = 3.0);
+Ramp14.py:081  |  hoomd.md.integrate.mode_standard(dt = 0.005);
+Ramp14.py:085  |  nanoparticles = hoomd.group.type(name = 'Nano_Particles', type = 'NP');
+notice(2): Group "Nano_Particles" created containing 4 particles
+Ramp14.py:086  |  mesogens = hoomd.group.rigid_center();
+notice(2): Group "rigid_center" created containing 1000 particles
+notice(2): Group "NP_Mes" created containing 1004 particles
+Ramp14.py:092  |  npt = hoomd.md.integrate.npt(group = groupNP_mes, kT = temp, tau = 3.0, tauP = 3.0, P = pressure);
+Ramp14.py:101  |  log = hoomd.analyze.log(filename = log_file,
+                         quantities = ['num_particles',
+                                     'ndof',
+                                     'translational_ndof',
+                                     'rotational_ndof',
+                                     'potential_energy',
+                                     'kinetic_energy',
+                                     'translational_kinetic_energy',
+                                     'rotational_kinetic_energy',
+                                     'temperature',
+                                     'pressure',
+                                      'volume'],
+                         period = 1e3,
+                         overwrite = True);
+Ramp14.py:117  |                 group = hoomd.group.all(),
+Ramp14.py:115  |  gsd = hoomd.dump.gsd(gsd_file,
+               period = 1e3,
+               group = hoomd.group.all(),
+               overwrite = True); 
+Ramp14.py:119  |  meso_gsd = hoomd.dump.gsd(meso_gsd_file,
+               period = 1e3,
+               group = groupNP_mes,
+               overwrite = True); 
+Ramp14.py:130  |  hoomd.run(run_time)
+notice(2): -- Neighborlist exclusion statistics -- :
+notice(2): Particles with 0 exclusions             : 9004
+notice(2): Neighbors included by diameter          : no
+notice(2): Neighbors excluded when in the same body: yes
+** starting run **
+Time 00:00:10 | Step 398759 / 496000 | TPS 275.85 | ETA 00:05:52
+Time 00:00:20 | Step 401749 / 496000 | TPS 298.916 | ETA 00:05:15
+Time 00:00:30 | Step 404730 / 496000 | TPS 298.088 | ETA 00:05:06
+Time 00:00:40 | Step 407771 / 496000 | TPS 303.941 | ETA 00:04:50
+Time 00:00:50 | Step 410791 / 496000 | TPS 301.887 | ETA 00:04:42
+Time 00:01:00 | Step 413818 / 496000 | TPS 302.556 | ETA 00:04:31
+Time 00:01:10 | Step 416771 / 496000 | TPS 295.281 | ETA 00:04:28
+Time 00:01:20 | Step 419762 / 496000 | TPS 298.988 | ETA 00:04:14
+Time 00:01:30 | Step 422673 / 496000 | TPS 291.049 | ETA 00:04:11
+Time 00:01:40 | Step 425653 / 496000 | TPS 297.841 | ETA 00:03:56
+Time 00:01:50 | Step 428581 / 496000 | TPS 292.682 | ETA 00:03:50
+Time 00:02:00 | Step 431513 / 496000 | TPS 293.11 | ETA 00:03:40
+Time 00:02:10 | Step 434454 / 496000 | TPS 294.094 | ETA 00:03:29
+Time 00:02:20 | Step 437340 / 496000 | TPS 288.595 | ETA 00:03:23
+Time 00:02:30 | Step 440209 / 496000 | TPS 286.862 | ETA 00:03:14
+Time 00:02:40 | Step 443090 / 496000 | TPS 287.995 | ETA 00:03:03
+Time 00:02:50 | Step 445953 / 496000 | TPS 286.282 | ETA 00:02:54
+Time 00:03:00 | Step 448749 / 496000 | TPS 279.399 | ETA 00:02:49
+Time 00:03:10 | Step 451577 / 496000 | TPS 282.781 | ETA 00:02:37
+Time 00:03:20 | Step 454388 / 496000 | TPS 281.049 | ETA 00:02:28
+Time 00:03:30 | Step 457215 / 496000 | TPS 282.577 | ETA 00:02:17
+Time 00:03:40 | Step 460034 / 496000 | TPS 281.762 | ETA 00:02:07
+Time 00:03:50 | Step 462864 / 496000 | TPS 282.859 | ETA 00:01:57
+Time 00:04:00 | Step 465601 / 496000 | TPS 273.494 | ETA 00:01:51
+Time 00:04:10 | Step 468380 / 496000 | TPS 277.858 | ETA 00:01:39
+Time 00:04:20 | Step 471129 / 496000 | TPS 274.812 | ETA 00:01:30
+Time 00:04:30 | Step 473864 / 496000 | TPS 273.419 | ETA 00:01:20
+Time 00:04:40 | Step 476588 / 496000 | TPS 272.299 | ETA 00:01:11
+Time 00:04:50 | Step 479342 / 496000 | TPS 275.347 | ETA 00:01:00
+Time 00:05:00 | Step 482069 / 496000 | TPS 272.517 | ETA 00:00:51
+Time 00:05:10 | Step 484766 / 496000 | TPS 269.582 | ETA 00:00:41
+Time 00:05:20 | Step 487489 / 496000 | TPS 272.163 | ETA 00:00:31
+Time 00:05:30 | Step 490203 / 496000 | TPS 271.342 | ETA 00:00:21
+Time 00:05:40 | Step 492841 / 496000 | TPS 263.789 | ETA 00:00:11
+Time 00:05:50 | Step 495505 / 496000 | TPS 266.36 | ETA 00:00:01
+Time 00:05:52 | Step 496000 / 496000 | TPS 267.719 | ETA 00:00:00
+Average TPS: 284.125
+---------
+-- Neighborlist stats:
+39598 normal updates / 335 forced updates / 0 dangerous updates
+n_neigh_min: 43 / n_neigh_max: 167 / n_neigh_avg: 125.28
+shortest rebuild period: 2
+** run complete **
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0m**ERROR**: nlist.tree(): Particle 50 is out of bounds (x: -240.682, y: -123.25, z: 495.544, fx: -2.66109, fy: -1.11874, fz:7.00842)
+HOOMD-blue 2.3.5 CUDA (8.0) DOUBLE HPMC_MIXED TBB SSE SSE2 
+Compiled: 10/08/18
+Copyright 2009-2018 The Regents of the University of Michigan.
+-----
+You are using HOOMD-blue. Please cite the following:
+* J A Anderson, C D Lorenz, and A Travesset. "General purpose molecular dynamics
+  simulations fully implemented on graphics processing units", Journal of
+  Computational Physics 227 (2008) 5342--5359
+* J Glaser, T D Nguyen, J A Anderson, P Liu, F Spiga, J A Millan, D C Morse, and
+  S C Glotzer. "Strong scaling of general-purpose molecular dynamics simulations
+  on GPUs", Computer Physics Communications 192 (2015) 97--107
+-----
+notice(2): This system is not compute exclusive, using local rank to select GPUs
+HOOMD-blue is running on the following GPU(s):
+ [0]            Tesla K20m  13 SM_3.5 @ 0.706 GHz, 4743 MiB DRAM
+Ramp16.py:049  |  system = hoomd.init.read_gsd(ramp_file,frame = -1)
+notice(2): Group "all" created containing 1004 particles
+Ramp16.py:053  |  rigid = hoomd.md.constrain.rigid();
+notice(2): constrain.rigid(): Creating 1000 rigid bodies (adding 8000 particles)
+Ramp16.py:065  |  nl = hoomd.md.nlist.tree()
+-----
+You are using tree neighbor lists. Please cite the following:
+* M P Howard, J A Anderson, A Nikoubashman, S C Glotzer, and A Z
+  Panagiotopoulos. "Efficient neighbor list calculation for molecular simulation
+  of colloidal systems using graphics processing units", Computer Physics
+  Communications 203 (2016) 45--52
+-----
+Ramp16.py:067  |  lj = hoomd.md.pair.lj(r_cut = 3.5, nlist=nl)
+Ramp16.py:068  |  lj.set_params(mode='shift')
+Ramp16.py:072  |  lj.pair_coeff.set('NP','NP', epsilon = 1.0, sigma = 5.0);
+Ramp16.py:073  |  lj.pair_coeff.set('M' ,'M' , epsilon = 1.0, sigma = 1.0);
+Ramp16.py:074  |  lj.pair_coeff.set('A' ,'A' , epsilon = 1.0, sigma = 1.0);
+Ramp16.py:075  |  lj.pair_coeff.set('M' ,'A' , epsilon = 1.0, sigma = 1.0);
+Ramp16.py:076  |  lj.pair_coeff.set('NP','M' , epsilon = 1.0, sigma = 3.0);
+Ramp16.py:077  |  lj.pair_coeff.set('NP','A' , epsilon = 1.0, sigma = 3.0);
+Ramp16.py:081  |  hoomd.md.integrate.mode_standard(dt = 0.005);
+Ramp16.py:085  |  nanoparticles = hoomd.group.type(name = 'Nano_Particles', type = 'NP');
+notice(2): Group "Nano_Particles" created containing 4 particles
+Ramp16.py:086  |  mesogens = hoomd.group.rigid_center();
+notice(2): Group "rigid_center" created containing 1000 particles
+notice(2): Group "NP_Mes" created containing 1004 particles
+Ramp16.py:092  |  npt = hoomd.md.integrate.npt(group = groupNP_mes, kT = temp, tau = 3.0, tauP = 3.0, P = pressure);
+Ramp16.py:101  |  log = hoomd.analyze.log(filename = log_file,
+                         quantities = ['num_particles',
+                                     'ndof',
+                                     'translational_ndof',
+                                     'rotational_ndof',
+                                     'potential_energy',
+                                     'kinetic_energy',
+                                     'translational_kinetic_energy',
+                                     'rotational_kinetic_energy',
+                                     'temperature',
+                                     'pressure',
+                                      'volume'],
+                         period = 1e3,
+                         overwrite = True);
+Ramp16.py:117  |                 group = hoomd.group.all(),
+Ramp16.py:115  |  gsd = hoomd.dump.gsd(gsd_file,
+               period = 1e3,
+               group = hoomd.group.all(),
+               overwrite = True); 
+Ramp16.py:119  |  meso_gsd = hoomd.dump.gsd(meso_gsd_file,
+               period = 1e3,
+               group = groupNP_mes,
+               overwrite = True); 
+Ramp16.py:130  |  hoomd.run(run_time)
+notice(2): -- Neighborlist exclusion statistics -- :
+notice(2): Particles with 0 exclusions             : 9004
+notice(2): Neighbors included by diameter          : no
+notice(2): Neighbors excluded when in the same body: yes
+** starting run **
+Time 00:00:10 | Step 497486 / 595000 | TPS 248.402 | ETA 00:06:32
+Time 00:00:20 | Step 500261 / 595000 | TPS 277.372 | ETA 00:05:41
+Time 00:00:30 | Step 502932 / 595000 | TPS 266.88 | ETA 00:05:44
+Time 00:00:40 | Step 505594 / 595000 | TPS 266.178 | ETA 00:05:35
+Time 00:00:50 | Step 508184 / 595000 | TPS 258.836 | ETA 00:05:35
+Time 00:01:00 | Step 510780 / 595000 | TPS 259.489 | ETA 00:05:24
+Time 00:01:10 | Step 513349 / 595000 | TPS 256.794 | ETA 00:05:17
+Time 00:01:20 | Step 515974 / 595000 | TPS 262.361 | ETA 00:05:01
+Time 00:01:30 | Step 518532 / 595000 | TPS 255.684 | ETA 00:04:59
+Time 00:01:40 | Step 521129 / 595000 | TPS 259.669 | ETA 00:04:44
+Time 00:01:50 | Step 523677 / 595000 | TPS 254.591 | ETA 00:04:40
+Time 00:02:00 | Step 526272 / 595000 | TPS 259.438 | ETA 00:04:24
+Time 00:02:10 | Step 528848 / 595000 | TPS 257.454 | ETA 00:04:16
+Time 00:02:20 | Step 531387 / 595000 | TPS 253.817 | ETA 00:04:10
+Time 00:02:30 | Step 533917 / 595000 | TPS 252.99 | ETA 00:04:01
+Time 00:02:40 | Step 536433 / 595000 | TPS 251.483 | ETA 00:03:52
+Time 00:02:50 | Step 538917 / 595000 | TPS 248.254 | ETA 00:03:45
+Time 00:03:00 | Step 541399 / 595000 | TPS 248.062 | ETA 00:03:36
+Time 00:03:10 | Step 543959 / 595000 | TPS 255.847 | ETA 00:03:19
+Time 00:03:20 | Step 546455 / 595000 | TPS 249.45 | ETA 00:03:14
+Time 00:03:30 | Step 548982 / 595000 | TPS 252.699 | ETA 00:03:02
+Time 00:03:40 | Step 551500 / 595000 | TPS 251.739 | ETA 00:02:52
+Time 00:03:50 | Step 553994 / 595000 | TPS 249.297 | ETA 00:02:44
+Time 00:04:00 | Step 556512 / 595000 | TPS 251.621 | ETA 00:02:32
+Time 00:04:10 | Step 559003 / 595000 | TPS 248.993 | ETA 00:02:24
+Time 00:04:20 | Step 561507 / 595000 | TPS 250.247 | ETA 00:02:13
+Time 00:04:30 | Step 564015 / 595000 | TPS 250.674 | ETA 00:02:03
+Time 00:04:40 | Step 566518 / 595000 | TPS 250.282 | ETA 00:01:53
+Time 00:04:50 | Step 569003 / 595000 | TPS 248.449 | ETA 00:01:44
+Time 00:05:00 | Step 571474 / 595000 | TPS 246.973 | ETA 00:01:35
+Time 00:05:10 | Step 573996 / 595000 | TPS 251.997 | ETA 00:01:23
+Time 00:05:20 | Step 576553 / 595000 | TPS 255.533 | ETA 00:01:12
+Time 00:05:30 | Step 579070 / 595000 | TPS 251.549 | ETA 00:01:03
+Time 00:05:40 | Step 581564 / 595000 | TPS 249.291 | ETA 00:00:53
+Traceback (most recent call last):
+  File "Ramp16.py", line 130, in <module>
+    hoomd.run(run_time)
+  File "/usr/local/lib/python3.5/dist-packages/hoomd/__init__.py", line 194, in run
+    context.current.system.run(int(tsteps), callback_period, callback, limit_hours, int(limit_multiple));
+RuntimeError: Error updating neighborlist
+[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-smi'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-debugdump'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-persistenced'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-control'
+[0m[33mWARNING: Skipping user bind, non existent bind point (file) in container: '/usr/bin/nvidia-cuda-mps-server'
+[0mHOOMD-blue 2.3.5 CUDA (8.0) DOUBLE HPMC_MIXED TBB SSE SSE2 
+Compiled: 10/08/18
+Copyright 2009-2018 The Regents of the University of Michigan.
+-----
+You are using HOOMD-blue. Please cite the following:
+* J A Anderson, C D Lorenz, and A Travesset. "General purpose molecular dynamics
+  simulations fully implemented on graphics processing units", Journal of
+  Computational Physics 227 (2008) 5342--5359
+* J Glaser, T D Nguyen, J A Anderson, P Liu, F Spiga, J A Millan, D C Morse, and
+  S C Glotzer. "Strong scaling of general-purpose molecular dynamics simulations
+  on GPUs", Computer Physics Communications 192 (2015) 97--107
+-----
+notice(2): This system is not compute exclusive, using local rank to select GPUs
+HOOMD-blue is running on the following GPU(s):
+ [0]            Tesla K20m  13 SM_3.5 @ 0.706 GHz, 4743 MiB DRAM
+Ramp18.py:049  |  system = hoomd.init.read_gsd(ramp_file,frame = -1)
+notice(2): Group "all" created containing 1004 particles
+Ramp18.py:053  |  rigid = hoomd.md.constrain.rigid();
+notice(2): constrain.rigid(): Creating 1000 rigid bodies (adding 8000 particles)
+Ramp18.py:065  |  nl = hoomd.md.nlist.tree()
+-----
+You are using tree neighbor lists. Please cite the following:
+* M P Howard, J A Anderson, A Nikoubashman, S C Glotzer, and A Z
+  Panagiotopoulos. "Efficient neighbor list calculation for molecular simulation
+  of colloidal systems using graphics processing units", Computer Physics
+  Communications 203 (2016) 45--52
+-----
+Ramp18.py:067  |  lj = hoomd.md.pair.lj(r_cut = 3.5, nlist=nl)
+Ramp18.py:068  |  lj.set_params(mode='shift')
+Ramp18.py:072  |  lj.pair_coeff.set('NP','NP', epsilon = 1.0, sigma = 5.0);
+Ramp18.py:073  |  lj.pair_coeff.set('M' ,'M' , epsilon = 1.0, sigma = 1.0);
+Ramp18.py:074  |  lj.pair_coeff.set('A' ,'A' , epsilon = 1.0, sigma = 1.0);
+Ramp18.py:075  |  lj.pair_coeff.set('M' ,'A' , epsilon = 1.0, sigma = 1.0);
+Ramp18.py:076  |  lj.pair_coeff.set('NP','M' , epsilon = 1.0, sigma = 3.0);
+Ramp18.py:077  |  lj.pair_coeff.set('NP','A' , epsilon = 1.0, sigma = 3.0);
+Ramp18.py:081  |  hoomd.md.integrate.mode_standard(dt = 0.005);
+Ramp18.py:085  |  nanoparticles = hoomd.group.type(name = 'Nano_Particles', type = 'NP');
+notice(2): Group "Nano_Particles" created containing 4 particles
+Ramp18.py:086  |  mesogens = hoomd.group.rigid_center();
+notice(2): Group "rigid_center" created containing 1000 particles
+notice(2): Group "NP_Mes" created containing 1004 particles
+Ramp18.py:092  |  npt = hoomd.md.integrate.npt(group = groupNP_mes, kT = temp, tau = 3.0, tauP = 3.0, P = pressure);
+Ramp18.py:101  |  log = hoomd.analyze.log(filename = log_file,
+                         quantities = ['num_particles',
+                                     'ndof',
+                                     'translational_ndof',
+                                     'rotational_ndof',
+                                     'potential_energy',
+                                     'kinetic_energy',
+                                     'translational_kinetic_energy',
+                                     'rotational_kinetic_energy',
+                                     'temperature',
+                                     'pressure',
+                                      'volume'],
+                         period = 1e3,
+                         overwrite = True);
+Ramp18.py:117  |                 group = hoomd.group.all(),
+Ramp18.py:115  |  gsd = hoomd.dump.gsd(gsd_file,
+               period = 1e3,
+               group = hoomd.group.all(),
+               overwrite = True); 
+Ramp18.py:119  |  meso_gsd = hoomd.dump.gsd(meso_gsd_file,
+               period = 1e3,
+               group = groupNP_mes,
+               overwrite = True); 
+Ramp18.py:130  |  hoomd.run(run_time)
+notice(2): -- Neighborlist exclusion statistics -- :
+notice(2): Particles with 0 exclusions             : 9004
+notice(2): Neighbors included by diameter          : no
+notice(2): Neighbors excluded when in the same body: yes
+** starting run **
+Time 00:00:10 | Step 585264 / 683000 | TPS 226.213 | ETA 00:07:12
+Time 00:00:20 | Step 587842 / 683000 | TPS 257.799 | ETA 00:06:09
+Time 00:00:30 | Step 590317 / 683000 | TPS 247.427 | ETA 00:06:14
+Time 00:00:40 | Step 592838 / 683000 | TPS 251.888 | ETA 00:05:57
+Time 00:00:50 | Step 595352 / 683000 | TPS 251.273 | ETA 00:05:48
+Time 00:01:00 | Step 597861 / 683000 | TPS 250.816 | ETA 00:05:39
+Time 00:01:10 | Step 600359 / 683000 | TPS 249.797 | ETA 00:05:30
+Time 00:01:20 | Step 602835 / 683000 | TPS 247.451 | ETA 00:05:23
+Time 00:01:30 | Step 605295 / 683000 | TPS 245.91 | ETA 00:05:15
+Time 00:01:40 | Step 607809 / 683000 | TPS 251.297 | ETA 00:04:59
+Time 00:01:50 | Step 610254 / 683000 | TPS 244.44 | ETA 00:04:57
+Time 00:02:00 | Step 612697 / 683000 | TPS 244.082 | ETA 00:04:48
+Time 00:02:10 | Step 615127 / 683000 | TPS 242.813 | ETA 00:04:39
+Time 00:02:20 | Step 617558 / 683000 | TPS 243.023 | ETA 00:04:29
+Time 00:02:30 | Step 619992 / 683000 | TPS 243.349 | ETA 00:04:18
+Time 00:02:40 | Step 622449 / 683000 | TPS 245.591 | ETA 00:04:06
+Time 00:02:50 | Step 624875 / 683000 | TPS 242.37 | ETA 00:03:59
+Time 00:03:00 | Step 627338 / 683000 | TPS 246.288 | ETA 00:03:46
+Time 00:03:10 | Step 629771 / 683000 | TPS 243.182 | ETA 00:03:38
+Time 00:03:20 | Step 632265 / 683000 | TPS 249.352 | ETA 00:03:23
+Time 00:03:30 | Step 634704 / 683000 | TPS 243.702 | ETA 00:03:18
+Time 00:03:40 | Step 637170 / 683000 | TPS 246.488 | ETA 00:03:05
+Time 00:03:50 | Step 639604 / 683000 | TPS 243.285 | ETA 00:02:58
+Time 00:04:00 | Step 642086 / 683000 | TPS 248.192 | ETA 00:02:44
+Time 00:04:10 | Step 644534 / 683000 | TPS 244.616 | ETA 00:02:37
+Time 00:04:20 | Step 647026 / 683000 | TPS 249.173 | ETA 00:02:24
+Time 00:04:30 | Step 649473 / 683000 | TPS 244.651 | ETA 00:02:17
+Time 00:04:40 | Step 651943 / 683000 | TPS 246.861 | ETA 00:02:05
+Time 00:04:50 | Step 654440 / 683000 | TPS 249.63 | ETA 00:01:54
+Time 00:05:00 | Step 658428 / 683000 | TPS 398.789 | ETA 00:01:01
+Time 00:05:10 | Step 664801 / 683000 | TPS 632.38 | ETA 00:00:28
+Time 00:05:20 | Step 671401 / 683000 | TPS 647.494 | ETA 00:00:17
+Time 00:05:30 | Step 678001 / 683000 | TPS 647.678 | ETA 00:00:07
+Time 00:05:38 | Step 683000 / 683000 | TPS 666.415 | ETA 00:00:00
+Average TPS: 295.782
+---------
+-- Neighborlist stats:
+28681 normal updates / 334 forced updates / 0 dangerous updates
+n_neigh_min: 0 / n_neigh_max: 0 / n_neigh_avg: 0
+shortest rebuild period: 1
+** run complete **
