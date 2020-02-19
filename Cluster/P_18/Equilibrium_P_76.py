@@ -64,6 +64,7 @@ lj.pair_coeff.set('NP', 'M', epsilon = 1.0, sigma = 3.0);
 lj.pair_coeff.set('NP', 'A', epsilon = 1.0, sigma = 3.0);
 
 #------Select an standar integrator
+
 hoomd.md.integrate.mode_standard(dt = 0.005);
 
 #-----Define some groups and make their union
@@ -105,13 +106,21 @@ hoomd.run(steps_run / 2)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 7.0, tauP = 7.0)
+npt.set_params(tau = 5.5, tauP = 5.5)
+
+#-----End the simulation
+
+hoomd.run(steps_run / 4)
+
+#-----Update coupling parameters
+
+npt.set_params(tau = 4.0, tauP = 4.0)
 
 #-----End the simulation
 
 hoomd.run(steps_run / 2)
 
 #-----Get volume and density information.
-system.box.get_volume()
 
+system.box.get_volume()
 system.get_metadata()

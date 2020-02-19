@@ -3,7 +3,7 @@
 
 # # Mesogens with NP | Equilibriums
 
-# ## Temperature: 7.2 | Cluster Run
+# ## Temperature: 8.0 | Cluster Run
 
 # ### Date: 15/01/2019 | System P = 2.3, Expected value of $T_c$ : 8.03 
 
@@ -14,14 +14,20 @@ import hoomd.md
 #-----Define relevant variables
 
 p_max = 2.3;
-t_max = 7.2;
+t_max = 8.0;
 copies = 1;
-steps_run = 1e5;
+steps_run = 2e5;
 init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
 
 #-----Define a simulation context
 
-hoomd.context.initialize("--mode=cpu");
+    #-----CPU run
+
+#hoomd.context.initialize("--mode=cpu");
+    
+    #-----GPU run
+
+hoomd.context.initialize("--mode=gpu");
 
 #-----Extract the configuration of the system and expand the system
 
@@ -68,7 +74,7 @@ groupNP_mes = hoomd.group.union(name = 'NP_Mes', a = nanoparticles, b = mesogens
 
 #-----Integrate using NPT
 
-npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 14.0, tauP = 14.0, P = p_max);
+npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 12.0, tauP = 12.0, P = p_max);
 
 #-----Save data
 
@@ -93,20 +99,35 @@ log = hoomd.analyze.log(filename = log_file,
 gsd = hoomd.dump.gsd(gsd_file, period = 1e2, group = hoomd.group.all(), overwrite = True);
 meso_gsd = hoomd.dump.gsd(meso_gsd_file, period=1e2, group = mesogens, overwrite = True);
 
-#-----Run part of the simulation
+#-----Run part of the simulation(5e4 steps)
 
-hoomd.run(steps_run / 2)
+hoomd.run(steps_run / 4)
 
-#-----Update coupling constants
+#-----Update coupling parameters
 
-npt.set_params(tau = 14.2, tauP = 14.2)
+npt.set_params(tau = 12.1, tauP = 12.1)
 
-#-----Finish the simulation
+#-----Continue the simulation(1e5 steps)
 
-hoomd.run(steps_run / 2)
+hoomd.run(steps_run / 4)
+
+#-----Update coupling parameters
+
+npt.set_params(tau = 12.2.0, tauP = 12.2)
+
+#-----Continue the simulation(1.5e5 steps)
+
+hoomd.run(steps_run / 4)
+
+#-----Update coupling parameters
+
+npt.set_params(tau = 12.3, tauP = 12.3)
+
+#-----Finish the simulation(2e5 steps)
+
+hoomd.run(steps_run / 4)
 
 #-----Get volume and density information.
 
 system.box.get_volume()
 system.get_metadata()
-

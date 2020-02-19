@@ -7,16 +7,9 @@
 
 # ### Date: 12/10/2019 | System P = 1.8, Expected value of $T_c$ : 7.09 |
 
-# In[ ]:
-
-
 from __future__ import division
 import hoomd
 import hoomd.md
-
-
-# In[ ]:
-
 
 #-----Define relevant variables
 p_max = 1.8;
@@ -24,10 +17,6 @@ t_max = 7.8;
 copies = 1;
 steps_run = 1e5;
 init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
-
-
-# In[ ]:
-
 
 #-----Define a simulation context
 
@@ -39,37 +28,23 @@ init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
 
 hoomd.context.initialize("--mode=cpu");
 
-
-# In[ ]:
-
-
 #-----Extract the configuration of the system and expand the system
 
 snap = hoomd.data.gsd_snapshot(init_file, frame = -1);
 snap.replicate(copies,copies,copies);
 system = hoomd.init.read_snapshot(snap);
 
-
-# In[ ]:
-
-
 #-----Define each mesogen in the local reference frame of each center of mass
+
 rigid = hoomd.md.constrain.rigid();
 rigid.set_param('M', 
                types = ['A']*8,
                positions = [(-4,0,0),(-3,0,0),(-2,0,0),(-1,0,0),
                             (1,0,0),(2,0,0),(3,0,0),(4,0,0)]);
 
-
-# In[ ]:
-
-
 #-----Declare molecules as rigid bodies
+
 rigid.create_bodies();
-
-
-# In[ ]:
-
 
 #-----Define the potential energy
 
@@ -133,7 +108,15 @@ npt.set_params(tau = 4.5, tauP = 4.5)
 
 #-----Finish the simulation
 
-hoomd.run(steps_run / 2)
+hoomd.run(steps_run / 4)
+
+#-----Update coupling parameters
+
+npt.set_params(tau = 4.0, tauP = 4.0)
+
+#-----Finish the simulation
+
+hoomd.run(steps_run / 4)
 
 #-----Get volume and density information.
 

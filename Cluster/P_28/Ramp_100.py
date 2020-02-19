@@ -7,37 +7,22 @@
 
 # ### Date: 15/01/2019 | System P = 2.3, Expected value of $T_c$ : 8.03 
 
-# In[ ]:
-
-
 #-----Import essential packages.
 
 from __future__ import division
 import hoomd
 import hoomd.md
 
-
-# In[ ]:
-
-
 #-----Define important variables.
 
-p_max = 2.3;
+p_max = 2.8;
 t_0   = 9.8; 
 t_1   = 10.0;
 steps_ramp = 1e4;
 
-
-# In[ ]:
-
-
 #-----Declare the file from wich we'll extract the configuration of the system.
 
 ramp_file = "T_CM&NP_" + str(t_0) + "_P_" + str(p_max) + "_ramp.gsd"
-
-
-# In[ ]:
-
 
 #-----Declare a simulation context.
 
@@ -89,7 +74,7 @@ groupNP_mes = hoomd.group.union(name = "NP_Mes", a = nanoparticles, b = mesogens
 
 temp = hoomd.variant.linear_interp(points = [(0,t_0), (steps_ramp, t_1)]);
 
-npt = hoomd.md.integrate.npt(group = groupNP_mes, kT = temp, tau = 1.0, tauP = 1.0, P = p_max);
+npt = hoomd.md.integrate.npt(group = groupNP_mes, kT = temp, tau = 1.8, tauP = 1.1, P = p_max);
 npt.randomize_velocities(seed=42)
 
 #-----Save .log y .gsd data.
@@ -121,27 +106,12 @@ meso_gsd = hoomd.dump.gsd(meso_gsd_file,
                group = groupNP_mes,
                overwrite = True); 
 
-
-# In[ ]:
-
-
 #-----Run the simulation.
 
 hoomd.run(steps_ramp)
 
-
-# In[ ]:
-
-
-#-----Get density.
+#-----Get density and volume.
 
 system.get_metadata()
-
-
-# In[ ]:
-
-
-#-----Get volume.
-
 system.box.get_volume()
 
