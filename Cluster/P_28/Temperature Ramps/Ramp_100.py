@@ -74,7 +74,7 @@ groupNP_mes = hoomd.group.union(name = "NP_Mes", a = nanoparticles, b = mesogens
 
 temp = hoomd.variant.linear_interp(points = [(0,t_0), (steps_ramp, t_1)]);
 
-npt = hoomd.md.integrate.npt(group = groupNP_mes, kT = temp, tau = 1.8, tauP = 1.1, P = p_max);
+npt = hoomd.md.integrate.npt(group = groupNP_mes, kT = temp, tau = 2.6, tauP = 1.6, P = p_max);
 npt.randomize_velocities(seed=42)
 
 #-----Save .log y .gsd data.
