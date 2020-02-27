@@ -112,7 +112,7 @@ hoomd.run(steps_run / 4)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 4.8, tauP = 4.8)
+npt.set_params(tau = 4.0, tauP = 4.0)
 
 #-----Finish the simulation
 

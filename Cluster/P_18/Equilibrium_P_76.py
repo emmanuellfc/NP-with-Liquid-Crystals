@@ -12,7 +12,6 @@ import hoomd
 import hoomd.md
 
 #-----Define relevant variables
-
 p_max = 1.8;
 t_max = 7.6;
 copies = 1;
@@ -22,11 +21,11 @@ init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
 
 #-----Define a simulation context
 
-    #-----This is if I want to run on a GPU
+    #-----This is I want to run on a GPU
 
 #hoomd.context.initialize("--mode=gpu");
 
-    #-----This is if I want to run on a CPU
+    #-----This is I want to run on a CPU
 
 hoomd.context.initialize("--mode=cpu");
 
@@ -115,11 +114,11 @@ hoomd.run(steps_run / 4)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 5.7, tauP = 5.7)
+npt.set_params(tau = 4.0, tauP = 4.0)
 
 #-----End the simulation
 
-hoomd.run(steps_run / 4)
+hoomd.run(steps_run / 2)
 
 #-----Get volume and density information.
 

@@ -7,17 +7,27 @@
 
 # ### Date: 12/10/2019 | System P = 1.8, Expected value of $T_c$ : 7.09 |
 
+# In[ ]:
+
+
 from __future__ import division
 import hoomd
 import hoomd.md
 
-#-----Define relevant variables
 
+# In[ ]:
+
+
+#-----Define relevant variables
 p_max = 1.8;
 t_max = 8.0;
 copies = 1;
 steps_run = 1e5;
 init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
+
+
+# In[ ]:
+
 
 #-----Define a simulation context
 
@@ -29,32 +39,48 @@ init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
 
 hoomd.context.initialize("--mode=cpu");
 
+
+# In[ ]:
+
+
 #-----Extract the configuration of the system and expand the system
 
 snap = hoomd.data.gsd_snapshot(init_file, frame = -1);
 snap.replicate(copies,copies,copies);
 system = hoomd.init.read_snapshot(snap);
 
-#-----Define each mesogen in the local reference frame of each center of mass
 
+# In[ ]:
+
+
+#-----Define each mesogen in the local reference frame of each center of mass
 rigid = hoomd.md.constrain.rigid();
 rigid.set_param('M', 
                types = ['A']*8,
                positions = [(-4,0,0),(-3,0,0),(-2,0,0),(-1,0,0),
                             (1,0,0),(2,0,0),(3,0,0),(4,0,0)]);
 
-#-----Declare molecules as rigid bodies
 
+# In[ ]:
+
+
+#-----Declare molecules as rigid bodies
 rigid.create_bodies();
 
-#-----Define the potential energy
 
+# In[ ]:
+
+
+#-----Define the potential energy
 nl = hoomd.md.nlist.tree();
 lj = hoomd.md.pair.lj(r_cut = 3.5, nlist = nl);
 lj.set_params(mode = 'shift')
 
-#------Define the interaction
 
+# In[ ]:
+
+
+#------Define the interaction
 lj.pair_coeff.set('NP','NP', epsilon = 1.0, sigma = 5.0);
 lj.pair_coeff.set('M', 'M', epsilon = 1.0, sigma = 1.0);
 lj.pair_coeff.set('A', 'A', epsilon = 1.0, sigma = 1.0);
@@ -62,8 +88,11 @@ lj.pair_coeff.set('M', 'A', epsilon = 1.0, sigma = 1.0);
 lj.pair_coeff.set('NP', 'M', epsilon = 1.0, sigma = 3.0);
 lj.pair_coeff.set('NP', 'A', epsilon = 1.0, sigma = 3.0);
 
-#------Select an standar integrator
 
+# In[ ]:
+
+
+#------Select an standar integrator
 hoomd.md.integrate.mode_standard(dt = 0.005);
 
 #-----Define some groups and make their union
@@ -72,9 +101,17 @@ nanoparticles = hoomd.group.type(name = 'NPs', type = 'NP');
 mesogens = hoomd.group.rigid_center();
 groupNP_mes = hoomd.group.union(name = 'NP_Mes', a = nanoparticles, b = mesogens);
 
+
+# In[ ]:
+
+
 #-----Integrate using NPT
 
-npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 4.0, tauP = 4.0, P = p_max);
+npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 10.5, tauP = 10.5, P = p_max);
+
+
+# In[ ]:
+
 
 #-----Save data
 
@@ -99,35 +136,24 @@ log = hoomd.analyze.log(filename = log_file,
 gsd = hoomd.dump.gsd(gsd_file, period = 1e2, group = hoomd.group.all(), overwrite = True);
 meso_gsd = hoomd.dump.gsd(meso_gsd_file, period=1e2, group = mesogens, overwrite = True);
 
-#-----Run part of the simulation
 
-hoomd.run(steps_run / 4)
+# In[ ]:
 
-#-----Update coupling parameters
 
-npt.set_params(tau = 4.5, tauP = 4.5)
+#-----Run the simulation
 
-#-----Run part of the simulation
+hoomd.run(steps_run)
 
-hoomd.run(steps_run / 4)
 
-#-----Update coupling parameters
+# In[ ]:
 
-npt.set_params(tau = 4.7, tauP = 4.7)
-
-#-----Run part of the simulation
-
-hoomd.run(steps_run / 4)
-
-#-----Update coupling parameters
-
-npt.set_params(tau = 4.6, tauP = 4.6)
-
-#-----Finish the simulation
-
-hoomd.run(steps_run / 4)
 
 #-----Get volume and density information.
-
 system.box.get_volume()
+
+
+# In[ ]:
+
+
 system.get_metadata()
+
