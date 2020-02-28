@@ -105,7 +105,7 @@ hoomd.run(steps_run / 4)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 4.5, tauP = 4.5)
+npt.set_params(tau = 4.0, tauP = 4.0)
 
 #-----Run part of the simulation
 
@@ -113,7 +113,7 @@ hoomd.run(steps_run / 4)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 4.7, tauP = 4.7)
+npt.set_params(tau = 4.2, tauP = 4.2)
 
 #-----Run part of the simulation
 
@@ -121,7 +121,7 @@ hoomd.run(steps_run / 4)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 4.6, tauP = 4.6)
+npt.set_params(tau = 4.3, tauP = 4.3)
 
 #-----Finish the simulation
 

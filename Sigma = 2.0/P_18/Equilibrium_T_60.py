@@ -21,7 +21,7 @@ init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
 
 #-----Define a simulation context
 
-hoomd.context.initialize("--mode=gpu");
+hoomd.context.initialize("--mode=cpu");
 
 #-----Extract the configuration of the system and expand the system
 
@@ -78,9 +78,9 @@ npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 10.0, tauP 
 
 #-----Save data
 
-log_file = "T_" + str(t_max) + "_P_" + str(p_max) + "_ramp.log"
-gsd_file = "T_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
-meso_gsd_file = "T_CM_" + str(t_max) + "_P_" + str(p_max) + "_ramp.log"
+log_file = "T_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.log"
+gsd_file = "T_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.gsd"
+meso_gsd_file = "T_CM_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.log"
 
 log = hoomd.analyze.log(filename = log_file,
                        quantities = ['num_particles', 
@@ -94,10 +94,10 @@ log = hoomd.analyze.log(filename = log_file,
                                     'temperature',
                                     'pressure',
                                     'volume'],
-                       period = 1e3,
+                       period = 1e2,
                        overwrite = True);
-gsd = hoomd.dump.gsd(gsd_file, period = 1e3, group = hoomd.group.all(), overwrite = True);
-meso_gsd = hoomd.dump.gsd(meso_gsd_file, period=1e3, group = mesogens, overwrite = True);
+gsd = hoomd.dump.gsd(gsd_file, period = 1e2, group = hoomd.group.all(), overwrite = True);
+meso_gsd = hoomd.dump.gsd(meso_gsd_file, period=1e2, group = mesogens, overwrite = True);
 
 #-----Run the simulation
 

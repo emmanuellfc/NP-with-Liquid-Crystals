@@ -3,7 +3,7 @@
 
 # # Mesogens with NP | Equilibrium
 
-# ## Temperature 6.6| Sigma = 2.0
+# ## Temperature 6.8 | Sigma = 2.0
 
 # ### Date: 12/10/2019 | System P = 1.8, Expected value of $T_c$ : 7.09 |
 
@@ -14,14 +14,14 @@ import hoomd.md
 #-----Define relevant variables
 
 p_max = 1.8;
-t_max = 6.6;
+t_max = 7.0;
 copies = 1;
 steps_run = 1e5;
 init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
 
 #-----Define a simulation context
 
-hoomd.context.initialize("--mode=gpu");
+hoomd.context.initialize("");
 
 #-----Extract the configuration of the system and expand the system
 
@@ -74,7 +74,7 @@ groupNP_mes = hoomd.group.union(name = 'NP_Mes', a = nanoparticles, b = mesogens
 
 #-----Integrate using NPT
 
-npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 10.0, tauP = 10.0, P = p_max);
+npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 5.0, tauP = 5.0, P = p_max);
 
 #-----Save data
 
@@ -107,4 +107,3 @@ hoomd.run(steps_run)
 
 system.box.get_volume()
 system.get_metadata()
-
