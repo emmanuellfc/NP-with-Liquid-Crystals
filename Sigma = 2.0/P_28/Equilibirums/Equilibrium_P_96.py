@@ -19,9 +19,20 @@ copies = 1;
 steps_run = 1e5;
 init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
 
+#-----Coupling Constants
+
+tau1 = 
+tau2 = 
+tau3 = 
+tau4 = 
+
 #-----Define a simulation context
 
-hoomd.context.initialize("--mode=gpu");
+    #-----To run on GPU
+#hoomd.context.initialize("--mode=gpu");
+
+    #-----To run on CPU
+hoomd.context.initialize("--mode=cpu");
 
 #-----Extract the configuration of the system and expand the system
 
@@ -74,7 +85,7 @@ groupNP_mes = hoomd.group.union(name = 'NP_Mes', a = nanoparticles, b = mesogens
 
 #-----Integrate using NPT
 
-npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 10.0, tauP = 10.0, P = p_max);
+npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = tau1, tauP = tau1, P = p_max);
 
 #-----Save data
 
@@ -99,12 +110,35 @@ log = hoomd.analyze.log(filename = log_file,
 gsd = hoomd.dump.gsd(gsd_file, period = 1e3, group = hoomd.group.all(), overwrite = True);
 meso_gsd = hoomd.dump.gsd(meso_gsd_file, period=1e3, group = mesogens, overwrite = True);
 
-#-----Run the simulation
+#-----Run part of the simulation
 
-hoomd.run(steps_run)
+hoomd.run(steps_run / 4)
+
+#-----Update coupling parameters
+
+npt.set_params(tau = tau2, tauP = tau2)
+
+#-----Continue the simulation
+
+hoomd.run(steps_run / 4)
+
+#-----Update coupling parameters
+
+npt.set_params(tau = tau3, tauP = tau3)
+
+#-----Continue the simulation
+
+hoomd.run(steps_run / 4)
+
+#-----Update coupling parameters
+
+npt.set_params(tau = tau4, tauP = tau4)
+
+#-----Finish the simulation
+
+hoomd.run(steps_run / 4)
 
 #-----Get volume and density information.
 
 system.box.get_volume()
 system.get_metadata()
-
