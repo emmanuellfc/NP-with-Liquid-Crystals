@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # Mesogens with NP | Equilibrium
+# # Mesogens with NP | Equilibriums
 
-# ## Temperature 8.0 | GPU Run
+# ## Temperature: 9.2 | Cluster Run
 
-# ### Date: 12/10/2019 | System P = 1.8, Expected value of $T_c$ : 7.09 |
+# ### Date: 21/01/2019 | System P = 3.3, Expected value of $T_c$ :
 
 from __future__ import division
 import hoomd
@@ -13,20 +13,25 @@ import hoomd.md
 
 #-----Define relevant variables
 
-p_max = 1.8;
-t_max = 8.0;
+p_max = 3.3;
+t_max = 9.2;
 copies = 1;
-steps_run = 1e5;
+steps_run = 1e4;
 init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
+
+#-----Coupling Constants
+
+tau1 = 
+tau2 = 
+tau3 = 
+tau4 = 
 
 #-----Define a simulation context
 
-    #-----This is I want to run on a GPU
-
+    #-----To run on GPU
 #hoomd.context.initialize("--mode=gpu");
 
-    #-----This is I want to run on a CPU
-
+    #-----To run on CPU
 hoomd.context.initialize("--mode=cpu");
 
 #-----Extract the configuration of the system and expand the system
@@ -74,13 +79,13 @@ groupNP_mes = hoomd.group.union(name = 'NP_Mes', a = nanoparticles, b = mesogens
 
 #-----Integrate using NPT
 
-npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 4.0, tauP = 4.0, P = p_max);
+npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = tau1, tauP = tau1, P = p_max);
 
 #-----Save data
 
-log_file = "T_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.log"
-gsd_file = "T_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.gsd"
-meso_gsd_file = "T_CM_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.log"
+log_file = "T_" + str(t_max) + "_P_" + str(p_max) + "_ramp.log"
+gsd_file = "T_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
+meso_gsd_file = "T_CM_" + str(t_max) + "_P_" + str(p_max) + "_ramp.log"
 
 log = hoomd.analyze.log(filename = log_file,
                        quantities = ['num_particles', 
@@ -99,31 +104,31 @@ log = hoomd.analyze.log(filename = log_file,
 gsd = hoomd.dump.gsd(gsd_file, period = 1e2, group = hoomd.group.all(), overwrite = True);
 meso_gsd = hoomd.dump.gsd(meso_gsd_file, period=1e2, group = mesogens, overwrite = True);
 
-#-----Run part of the simulation
+#-----Run part of the simulation(5e4 steps)
 
 hoomd.run(steps_run / 4)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 3.9, tauP = 3.9)
+npt.set_params(tau = tau2, tauP = tau2)
 
-#-----Run part of the simulation
-
-hoomd.run(steps_run / 4)
-
-#-----Update coupling parameters
-
-npt.set_params(tau = 3.9, tauP = 3.9)
-
-#-----Run part of the simulation
+#-----Continue the simulation(1e5 steps)
 
 hoomd.run(steps_run / 4)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 3.7, tauP = 3.7)
+npt.set_params(tau = tau3, tauP = tau3)
 
-#-----Finish the simulation
+#-----Continue the simulation(1.5e5 steps)
+
+hoomd.run(steps_run / 4)
+
+#-----Update coupling parameters
+
+npt.set_params(tau = tau4, tauP = tau4)
+
+#-----Finish the simulation(2e5 steps)
 
 hoomd.run(steps_run / 4)
 

@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/LUSTRE/home/uam/izt/ogl/alumnos/a.jefc/tmp'
-let g:netrw_dirhist_2='/LUSTRE/home/uam/izt/ogl/alumnos/a.jefc/Expanded_system'
-let g:netrw_dirhist_3='/LUSTRE/home/uam/izt/ogl/alumnos/a.jefc/Little_system/NP_and_mesogens/P_2_3/Ramps/Temperature_ramps'
-let g:netrw_dirhist_4='/LUSTRE/home/uam/izt/ogl/alumnos/a.jefc/Little_system/NP_and_mesogens/P_2_3/Ramps'
-let g:netrw_dirhist_5='/LUSTRE/home/uam/izt/ogl/alumnos/a.jefc/Little_system/NP_and_mesogens/P_2_8/Ramps/Temperature_ramps'
-let g:netrw_dirhist_6='/LUSTRE/home/uam/izt/ogl/alumnos/a.jefc/Little_system/NP_and_mesogens/P_3_3'
