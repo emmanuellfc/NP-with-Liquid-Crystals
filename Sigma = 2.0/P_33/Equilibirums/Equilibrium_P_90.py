@@ -40,6 +40,12 @@ snap = hoomd.data.gsd_snapshot(init_file, frame = -1);
 snap.replicate(copies,copies,copies);
 system = hoomd.init.read_snapshot(snap);
 
+#-----Change the radius of the NP's
+
+for p in system.particles:
+    if p.type =='NP':
+        p.diameter = 4
+
 #-----Define each mesogen in the local reference frame of each center of mass
 
 rigid = hoomd.md.constrain.rigid();
