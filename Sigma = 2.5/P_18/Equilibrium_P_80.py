@@ -3,9 +3,9 @@
 
 # # Mesogens with NP | Equilibrium
 
-# ## Temperature 8.0 | GPU Run
+# ## Temperature 8.0 |
 
-# ### Date: 12/10/2019 | System P = 1.8, Expected value of $T_c$ : 7.09 |
+# ### System P = 1.8, Expected value of $T_c$ : 7.09 |
 
 from __future__ import division
 import hoomd
@@ -113,7 +113,7 @@ hoomd.run(steps_run / 4)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 3.9, tauP = 3.9)
+npt.set_params(tau = 4.0, tauP = 4.0)
 
 #-----Run part of the simulation
 
@@ -121,7 +121,7 @@ hoomd.run(steps_run / 4)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 3.7, tauP = 3.7)
+npt.set_params(tau = 3.8, tauP = 3.8)
 
 #-----Finish the simulation
 
