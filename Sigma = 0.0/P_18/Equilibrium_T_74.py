@@ -1,11 +1,8 @@
-#!/usr/bin/env python
-# coding: utf-8
+# # Mesogens with NP | Equilibrium
 
-# # Pure System | Equilibrium
+# ## Temperature 7.4 | Sigma = 0.0
 
-# ## Temperature 6.0 | 
-
-# ### Date: 12/10/2019 | System P = 1.8, Expected value of $T_c$ : 7.09 |
+# ### System P = 1.8, Expected value of $T_c$ : 7.09 |
 
 from __future__ import division
 import hoomd
@@ -14,14 +11,20 @@ import hoomd.md
 #-----Define relevant variables
 
 p_max = 1.8;
-t_max = 7.0;
+t_max = 7.4;
 copies = 1;
 steps_run = 1e5;
 init_file = "T_CM&NP_" + str(t_max) + "_P_" + str(p_max) + "_ramp.gsd"
 
 #-----Define a simulation context
 
-hoomd.context.initialize("");
+    #-----This is I want to run on a GPU
+
+#hoomd.context.initialize("--mode=gpu");
+
+    #-----This is I want to run on a CPU
+
+hoomd.context.initialize("--mode=cpu");
 
 #-----Extract the configuration of the system and expand the system
 
@@ -29,12 +32,14 @@ snap = hoomd.data.gsd_snapshot(init_file, frame = -1);
 snap.replicate(copies,copies,copies);
 system = hoomd.init.read_snapshot(snap);
 
-#-----Deleting NP's
+#-----Delete NP's
 
-system.particles.remove(1000)
-system.particles.remove(1001)
-system.particles.remove(1002)
-system.particles.remove(1003)
+tags = []
+for p in system.particles:
+    if p.type == 'NP':
+        tags.append(p.tag)
+for t in tags:
+    system.particles.remove(t)
 
 #-----Define each mesogen in the local reference frame of each center of mass
 
@@ -75,13 +80,13 @@ groupNP_mes = hoomd.group.union(name = 'NP_Mes', a = nanoparticles, b = mesogens
 
 #-----Integrate using NPT
 
-npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 10.0, tauP = 10.0, P = p_max);
+npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 6.1, tauP = 6.1, P = p_max);
 
 #-----Save data
 
-log_file = "PS_T_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.log"
-gsd_file = "PS_T_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.gsd"
-meso_gsd_file = "PS_T_CM_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.log"
+log_file = "T_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.log"
+gsd_file = "T_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.gsd"
+meso_gsd_file = "T_CM_" + str(t_max) + "_P_" + str(p_max) + "_equilibrium.log"
 
 log = hoomd.analyze.log(filename = log_file,
                        quantities = ['num_particles', 
@@ -108,3 +113,4 @@ hoomd.run(steps_run)
 
 system.box.get_volume()
 system.get_metadata()
+
