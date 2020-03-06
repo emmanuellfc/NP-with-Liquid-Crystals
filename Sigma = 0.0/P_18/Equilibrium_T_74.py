@@ -80,7 +80,7 @@ groupNP_mes = hoomd.group.union(name = 'NP_Mes', a = nanoparticles, b = mesogens
 
 #-----Integrate using NPT
 
-npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 6.1, tauP = 6.1, P = p_max);
+npt = hoomd.md. integrate.npt(group = groupNP_mes, kT = t_max, tau = 6.0, tauP = 6.0, P = p_max);
 
 #-----Save data
 
@@ -105,9 +105,17 @@ log = hoomd.analyze.log(filename = log_file,
 gsd = hoomd.dump.gsd(gsd_file, period = 1e2, group = hoomd.group.all(), overwrite = True);
 meso_gsd = hoomd.dump.gsd(meso_gsd_file, period=1e2, group = mesogens, overwrite = True);
 
-#-----Run the simulation
+#-----Run part of the simulation
 
-hoomd.run(steps_run)
+hoomd.run(steps_run / 2)
+
+#-----Update coupling parameters
+
+npt.set_params(tau = 6.5, tauP = 6.5)
+
+#-----End the simulation
+
+hoomd.run(steps_run / 2)
 
 #-----Get volume and density information.
 

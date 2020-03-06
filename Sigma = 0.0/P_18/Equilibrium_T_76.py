@@ -115,11 +115,11 @@ hoomd.run(steps_run / 2)
 
 #-----Update coupling parameters
 
-npt.set_params(tau = 5.5, tauP = 5.5)
+#npt.set_params(tau = 5.5, tauP = 5.5)
 
 #-----End the simulation
 
-hoomd.run(steps_run / 4)
+#hoomd.run(steps_run / 4)
 
 #-----Update coupling parameters
 
@@ -127,7 +127,7 @@ npt.set_params(tau = 5.5, tauP = 5.5)
 
 #-----End the simulation
 
-hoomd.run(steps_run / 4)
+hoomd.run(steps_run / 2)
 
 #-----Get volume and density information.
 
